@@ -75,5 +75,6 @@ public class test {
         tree.root.right = new Node<Integer>(5);
         tree.root.right.left = new Node<Integer>(4);
         tree.root.right.right = new Node<Integer>(6);
+        //BinaryTree.BinaryTreeIterator iter = new BinaryTree.BinaryTreeIterator (tree);
     }
 }

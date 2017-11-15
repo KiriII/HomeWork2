@@ -26,6 +26,13 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
             }
             return this.left.minValue();
         }
+
+        public T maxValue(){
+            if (right == null){
+                return value;
+            }
+            return this.right.maxValue();
+        }
     }
 
     public Node<T> root = null;
@@ -133,17 +140,21 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
         private BinaryTreeIterator() {}
 
         public Node<T> findNext() {
-            Node<T> next = null;
+            Node<T> next ;
+            Node<T> father = findFather(root , current.value);
             if (current.value == last()) return null;
-            if (current == null) next = root;
-            else if (current.left != null ) next = current.left;
+            if (current == null) return find(first());
+            else if (current.right == null && father.left == current)
+                return father;
+            else if (current.right != null){
+                next = find(current.right.minValue());
+            }
             else {
-                Node<T> pastStep = current;
-                while (current.right == null && current.right != pastStep){
-                    pastStep = current;
-                    current = findFather(root, current.value);
+                next = current;
+                while (next.value.compareTo(findFather(root , next.value).value) < 0){
+                    next = findFather(root , next.value);
                 }
-                current = current.right;
+                return next;
             }
             return next;
         }
